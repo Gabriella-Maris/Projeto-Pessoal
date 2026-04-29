@@ -57,6 +57,12 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var cpf = req.body.cpfServer;
+    // var nomeEscolinha = req.body.nomeEscolinhaServer;
+    // var cnpj = req.body.cnpjServer;
+    // var bairro = req.body.bairroServer;
+    // var rua = req.body.ruaServer;
+    // var numero = req.body.numeroServer;
+    
 
     // Faça as validações dos valores
     if (nome == undefined) {

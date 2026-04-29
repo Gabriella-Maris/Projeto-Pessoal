@@ -188,7 +188,7 @@ body {
 
 .footer {
   background-color: #1f6d15;
-  height: 150px;
+  height: 100px;
   color: #fff;
   display: flex;
   font-size: 20px;
@@ -416,4 +416,46 @@ input {
   50%  {transform: rotate(25deg)}
   75%  {transform: rotate(-25deg)}
   100% {transform: rotate(25deg)}
+}
+
+.escolhas{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.escolhas .escolha1{
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #1f6d15;
+  font-weight: bold;
+}
+
+.escolhas .escolha2{
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #1f6d15;
+  font-weight: bold;
+}
+
+.escolhas a{
+  text-decoration: none;
+  color: white;
+}
+
+.campos{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 40px;
+  margin-top: 10px;
 }
