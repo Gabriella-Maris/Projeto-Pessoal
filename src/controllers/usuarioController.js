@@ -1,5 +1,4 @@
 var usuarioModel = require("../models/usuarioModel");
-var aquarioModel = require("../models/aquarioModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -20,20 +19,15 @@ function autenticar(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
-                            .then((resultadoAquarios) => {
-                                if (resultadoAquarios.length > 0) {
-                                    res.json({
-                                        id: resultadoAutenticar[0].id,
-                                        nome: resultadoAutenticar[0].nome,
-                                        email: resultadoAutenticar[0].email,
-                                        senha: resultadoAutenticar[0].senha,
-                                        cpf: resultadoAutenticar[0].cpf,
-                                    });
-                                } else {
-                                    res.status(204).json({ aquarios: [] });
-                                }
-                            })
+                        res.json({
+                            id: resultadoAutenticar[0].id,
+                            nome: resultadoAutenticar[0].nome,
+                            email: resultadoAutenticar[0].email,
+                            senha: resultadoAutenticar[0].senha,
+                            cpf: resultadoAutenticar[0].cpf,
+                        });
+
+
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
@@ -62,7 +56,7 @@ function cadastrar(req, res) {
     // var bairro = req.body.bairroServer;
     // var rua = req.body.ruaServer;
     // var numero = req.body.numeroServer;
-    
+
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -71,7 +65,7 @@ function cadastrar(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if(cpf == undefined){
+    } else if (cpf == undefined) {
         res.status(400).send("Seu CPF está undefined!");
     } else {
 
