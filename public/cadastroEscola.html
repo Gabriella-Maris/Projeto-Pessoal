@@ -58,7 +58,7 @@
                         <div class="campo1">
                             <div class="campo">
                                 <span>Nome escolinha:</span>
-                                <input id="nome_escolinha_input" type="text" placeholder="Nome da escolinha" />
+                                <input id="nome_input" type="text" placeholder="Nome da escolinha" />
                             </div>
                             <div class="campo">
                                 <span>CNPJ:</span>
@@ -81,7 +81,7 @@
                         <div class="campo2">
                             <div class="campo">
                                 <span>Nome:</span>
-                                <input id="nome_input" type="text" placeholder="Seu nome" />
+                                <input id="nome_representante_input" type="text" placeholder="Seu nome" />
                             </div>
                             <div class="campo">
                                 <span>E-mail:</span>
@@ -136,18 +136,18 @@
         var senhaVar = senha_input.value;
         var confirmacaoSenhaVar = confirmacao_senha_input.value;
         var cpfVar = cpf_input.value;
-        var tamanhoNome = nomeVar.length;
+        var nome_representanteVar = nome_representante_input.value
+        var cnpjVar = cnpj_input.value
+        var bairroVar = bairro_input.value
+        var ruaVar = rua_input.value
+        var numeroVar = numero_input.value
+        var tamanhoNome = nome_representanteVar.length;
+        var tamanhoNomeEscolinha = nomeVar.length
+        var tamanhoCnpj = cnpjVar.length
         var temArroba = emailVar.indexOf('@')
         var temPonto = emailVar.indexOf('.')
         var tamanhoSenha = senhaVar.length
         var tamanhoCpf = cpfVar.length
-        var nomeEscolinhaVar = nome_escolinha_input.value
-        var tamanhoNomeEscolinha = nomeEscolinhaVar.length
-        var cnpjVar = cnpj_input.value
-        var tamanhoCnpj = cnpjVar.length
-        var bairroVar = bairro_input.value
-        var ruaVar = rua_input.value
-        var numeroVar = numero_input.value
 
         // Verificando se há algum campo em branco
         var campos = [
@@ -156,7 +156,7 @@
             cpf_input,
             senha_input,
             confirmacao_senha_input,
-            nome_escolinha_input,
+            nome_representante_input,
             cnpj_input,
             bairro_input,
             rua_input,
@@ -266,7 +266,7 @@
         }
 
         // Enviando o valor da nova input
-        fetch("/usuarios/cadastrar", {
+        fetch("/escolinhas/cadastrar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -278,7 +278,7 @@
                 emailServer: emailVar,
                 senhaServer: senhaVar,
                 cpfServer: cpfVar,
-                nomeEscolinhaServer: nomeEscolinhaVar,
+                nome_representanteServer: nome_representanteVar,
                 cnpjServer: cnpjVar,
                 bairroServer: bairroVar,
                 ruaServer: ruaVar,
