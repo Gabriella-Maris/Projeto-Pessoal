@@ -1,11 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
+    <div class="buscar-escolinhas">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
+        <div class="container">
+            <input type="text" id="input_bairro" placeholder="Buscar por bairro. Ex: Cmapanário.">
+            <button onclick="busca()">Buscar</button>
+        </div>
+    </div>
+
+    <div id="resultado"></div>
+
 </body>
+
 </html>
+
+<script>
+    function busca() {
+        var bairroVar = input_bairro.value;
+
+        fetch("/busca/listar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                bairroServer: bairroVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    for (var i = 0; i < json.length; i++) {
+
+                        resultado.innerHTML += `
+                        <div>
+                            <h3>${json[i].nome}</h3>
+                            <p>${json[i].bairro}</p>
+                            <p>${json[i].rua}</p>
+                        </div>
+                    `;
+                    }
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+</script>
