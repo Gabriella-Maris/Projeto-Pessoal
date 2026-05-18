@@ -5,30 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/dashboards.css">
+    <script src="../js/sessao.js"></script>
 </head>
 
 <body>
-    <div class="buscar-escolinhas">
-        <div class="alerta_erro">
-            <div class="card_erro" id="cardErro">
-                <span id="mensagem_erro"></span>
+
+    <div class="janela">
+        <div class="header-left">
+            <h1>FutDelas</h1>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
             </div>
+
+            <div class="btn-nav-white">
+                <a href="../buscarEscolinhas.html">
+                    <h3>Buscar Escolinhas</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="./dashboard/dashboard.html">
+                    <h3>Gráficos</h3>
+                </a>
+            </div>
+
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+
         </div>
-        <div class="container">
-            <input type="text" id="input_bairro" placeholder="Buscar por bairro. Ex: Cmapanário.">
-            <button onclick="busca()">Buscar</button>
+
+        <div class="dash-busca">
+            <div class="container-escolinha">
+                <input type="text" id="input_bairro" placeholder="      Buscar por bairro. Ex: Cmapanário.">
+                <button onclick="busca()"><img src="./assets/procurar.png" alt=""></button>
+            </div>
+            <div id="resultado"></div>
         </div>
     </div>
-
-    <div id="resultado"></div>
 
 </body>
 
 </html>
 
 <script>
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
     function busca() {
+
         var bairroVar = input_bairro.value;
 
         fetch("/busca/listar", {
@@ -52,11 +78,7 @@
                     for (var i = 0; i < json.length; i++) {
 
                         resultado.innerHTML += `
-                        <div>
-                            <h3>${json[i].nome}</h3>
-                            <p>${json[i].bairro}</p>
-                            <p>${json[i].rua}</p>
-                        </div>
+                        <br><br>Nome: ${json[i].nome}          Bairro:${json[i].bairro}           Rua:${json[i].rua}               Número:${json[i].numero}              Contato:${json[i].email}
                     `;
                     }
 
