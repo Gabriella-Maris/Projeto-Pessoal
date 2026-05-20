@@ -190,9 +190,14 @@
 
                     for (var i = 0; i < json.length; i++) {
                         botaos.innerHTML += `${json[i].total}`;
+
+                    }
+                    if (json[i].total == 0) {
+                        botaos.innerHTML += `Ainda sem escolinhas nesse bairro`
                     }
 
                 });
+
             }
             else {
                 console.log("Houve um erro ao tentar procurar escolinhas!");

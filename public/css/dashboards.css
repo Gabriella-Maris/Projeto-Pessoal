@@ -453,6 +453,7 @@ canvas {
   height: 40px;
   border: 2px solid #1dff00;
   border-radius: 15px;;
+  padding-left: 15px;
 }
 
 .container-escolinha button{
@@ -463,13 +464,34 @@ canvas {
   border: 3px solid #161618;
 }
 
-#resultado{
-  color: white;
-  font-size: 20px;
+#resultado {
   display: flex;
   justify-content: center;
+  margin-left: -20px;
+  color: black;
+  font-size: 18px;
 }
 
+.tabela {
+  border-collapse: collapse;
+  width: 110%;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabela th, .tabela td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+.tabela th {
+  background-color: #00ff88;
+  color: black;
+  font-weight: bold;
+}
 .kpi{
   width:100%;
   display:flex;
