@@ -53,8 +53,8 @@
 
 <script>
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
-    function busca() {
 
+    function busca() {
         var bairroVar = input_bairro.value;
 
         fetch("/busca/listar", {
@@ -68,6 +68,7 @@
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
 
+
             if (resposta.ok) {
                 console.log(resposta);
 
@@ -75,19 +76,31 @@
                     console.log(json);
                     console.log(JSON.stringify(json));
 
-                    for (var i = 0; i < json.length; i++) {
+                    resultado.innerHTML = "";
 
+                    if (json.length == 0) {
+                        resultado.innerHTML = `Ainda sem escolinhas cadastradas neste bairro`
+                    }
+                    for (var i = 0; i < json.length; i++) {
                         resultado.innerHTML += `
-                        <br><br>Nome: ${json[i].nome}          Bairro:${json[i].bairro}           Rua:${json[i].rua}               Número:${json[i].numero}              Contato:${json[i].email}
+                        <br><br>Nome: ${json[i].nome}          
+                        Bairro:${json[i].bairro}           
+                        Rua:${json[i].rua}               
+                        Número:${json[i].numero}              
+                        Contato:${json[i].email}
                     `;
+
+                        localStorage.setItem("nomeEscolinha", json[i].nome);
+                        localStorage.setItem("bairroEscolinha", json[i].bairro);
+                        localStorage.setItem("ruaEscolinha", json[i].rua);
+                        localStorage.setItem("numeroEscolinha", json[i].numero)
                     }
 
                 });
 
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
+            }
+            else {
+                console.log("Houve um erro ao tentar procurar escolinhas!");
                 resposta.text().then(texto => {
                     console.error(texto);
                 });

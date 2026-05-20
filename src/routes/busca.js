@@ -8,4 +8,8 @@ router.post("/listar", function (req, res) {
     buscaController.listar(req, res);
 });
 
+router.post("/contar", function (req, res) {
+    buscaController.contar(req, res);
+});
+
 module.exports = router;
