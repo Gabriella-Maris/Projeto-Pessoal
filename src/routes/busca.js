@@ -12,4 +12,12 @@ router.post("/contar", function (req, res) {
     buscaController.contar(req, res);
 });
 
+router.post("/registrarBusca", function (req, res) {
+    buscaController.registrarBusca(req, res);
+});
+
+router.post("/maisBuscados", function (req, res) {
+    buscaController.maisBuscados(req, res);
+});
+
 module.exports = router;

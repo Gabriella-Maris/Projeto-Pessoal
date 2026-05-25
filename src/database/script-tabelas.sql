@@ -6,7 +6,8 @@ CREATE TABLE usuario (
 	nome VARCHAR(50),
 	email VARCHAR(50),
 	senha VARCHAR(50),
-	cpf CHAR(11)
+	cpf CHAR(11),
+    bairroUsuario VARCHAR(45)
 );
 
 CREATE TABLE escolinha(
@@ -21,3 +22,8 @@ CREATE TABLE escolinha(
     cpf CHAR(11),
     senha VARCHAR(45)
 );    
+
+CREATE TABLE bairro (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45)
+);

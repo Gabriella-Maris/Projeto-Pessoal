@@ -21,7 +21,7 @@
 
             <div class="btn-nav-white">
                 <a href="../buscarEscolinhas.html">
-                    <h3>Buscar Escolinhas</h3>
+                    <h3>Buscar Escolas</h3>
                 </a>
             </div>
 
@@ -41,7 +41,7 @@
         <div class="dash-busca">
             <div class="container-escolinha">
                 <input type="text" id="input_bairro" placeholder="Buscar por bairro. Ex: Cmapanário.">
-                <button onclick="busca()"><img src="./assets/procurar.png" alt=""></button>
+                <button onclick="busca(event)"><img src="./assets/procurar.png" alt=""></button>
             </div>
             <div id="resultado"></div>
         </div>
@@ -106,22 +106,15 @@
                             <td>${json[i].email}</td>
                         </tr>
                     `;
+                    }
 
-                    
-                    
-                    localStorage.setItem("nomeEscolinha", json[i].nome);
-                    localStorage.setItem("bairroEscolinha", json[i].bairro);
-                    localStorage.setItem("ruaEscolinha", json[i].rua);
-                    localStorage.setItem("numeroEscolinha", json[i].numero)
-                }
-                
-                tabela += `
+                    tabela += `
                     </tbody>
                     </table>
                 `;
-    
-                resultado.innerHTML = tabela;
-            });
+
+                    resultado.innerHTML = tabela;
+                });
 
             }
             else {
@@ -133,6 +126,16 @@
 
         }).catch(function (erro) {
             console.log(erro);
+        })
+
+        fetch("/busca/registrarBusca", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                bairroServer: bairroVar
+            })
         })
 
         return false;

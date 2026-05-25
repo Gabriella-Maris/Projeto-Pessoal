@@ -12,4 +12,16 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+router.post("/bairro", function (req, res) {
+    usuarioController.bairro(req, res);
+});
+
+router.post("/total", function (req, res) {
+    usuarioController.total(req, res);
+});
+
+router.post("/nulos", function (req, res) {
+    usuarioController.nulos(req, res);
+});
+
 module.exports = router;

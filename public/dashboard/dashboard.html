@@ -43,7 +43,7 @@
 
             <div class="btn-nav-white">
                 <a href="../buscarEscolinhas.html">
-                    <h3>Buscar Escolinhas</h3>
+                    <h3>Buscar Escolas</h3>
                 </a>
             </div>
 
@@ -60,35 +60,48 @@
         </div>
 
         <div class="dash-busca">
-            <p style="color: white; font-size: 25px;">Escolha um bairro:</p>
-            <div id="div_bairros">
-                <button style="background-color:#00ff88;" onclick="bairro('Eldorado')">Eldorado</button>
-                <button style="background-color:#ff4d4d;" onclick="bairro('Campanário')">Campanário</button>
-                <button style="background-color:#4d79ff;" onclick="bairro('Centro')">Centro</button>
-                <button style="background-color:#ffb84d;" onclick="bairro('Piraporinha')">Piraporinha</button>
-                <button style="background-color:#b84dff;" onclick="bairro('Taboão')">Taboão</button>
-                <button style="background-color:#00cccc;" onclick="bairro('Cahema')">Cahema</button>
-                <button style="background-color:#ff66b3;" onclick="bairro('Conceição')">Conceição</button>
-                <button style="background-color:#66ff66;" onclick="bairro('Inamar')">Inamar</button>
-                <button style="background-color:#cccc00;" onclick="bairro('Serraria')">Serraria</button>
-                <button style="background-color:#ff884d;" onclick="bairro('Vila Nogueira')">Vila Nogueira</button>
+
+            <h2 class="titulo-dashboard">Painel de Controle em Tempo Real</h2>
+
+            <div class="container-kpi">
+
+                <div class="kpi">
+                    <p>Total de escolas em Diadema</p>
+                    <h1 id="totalEscolinhas"></h1>
+                </div>
+
+                <div class="kpi">
+                    <p>Escolas no seu bairro</p>
+                    <h1 id="mensagem"></h1>
+                </div>
+
+                <div class="kpi">
+                    <p>Bairros sem escolas cadastradas</p>
+                    <h1 id="nulos"></h1>
+                </div>
+
             </div>
 
-            <div class="kpi">
-                <div id="div_botaos">
-                    <p>Quantidade de escolinha neste bairro: </p>
+            <div class="container-botaos">
+                <div class="div_botaos">
+                    <p>Quantidade de escolas em cada bairro:</p>
                     <canvas id="myChart"></canvas>
                 </div>
 
-                <div id="div_ultima">
-                    <p>Ultima escolinha vista:</p>
+                <div class="div_botaos">
+                    <p>Top 3 escolinhas mais procuradas:</p>
+                    <canvas id="myChart2"></canvas>
                 </div>
             </div>
 
 
-            <div class="btns-dash" id="btnAquario">
-                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
-            </div>
+            <!-- <div id="div_ultima">
+                <p>Ultima escolinha vista:</p>
+            </div> -->
+
+            <!-- <div class="btns-dash" id="btnAquario">
+                O gráfico é chamado de acordo com o id (fk_aquario) do banco
+            </div> -->
 
             <div id="graficos">
 
@@ -105,113 +118,239 @@
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     window.onload = function () {
-        var nome = localStorage.getItem("nomeEscolinha");
-        var bairro = localStorage.getItem("bairroEscolinha");
-        var rua = localStorage.getItem("ruaEscolinha");
-        var numero = localStorage.getItem("numeroEscolinha");
+        // var nome = localStorage.getItem("nomeEscolinha");
+        // var bairro = localStorage.getItem("bairroEscolinha");
+        // var rua = localStorage.getItem("ruaEscolinha");
+        // var numero = localStorage.getItem("numeroEscolinha");
 
-        if (nome != null) {
+        // if (nome != null) {
 
-            div_ultima.innerHTML = `<h2>Última escolinha vista:</h2> <br>
-                                    <p><b>Nome:</b>${nome}</p>
-                                    <p><b>Bairro:</b> ${bairro}</p>
-                                    <p><b>Rua:</b> ${rua}</p>
-                                    <p><b>Número:</b> ${numero}</p>
-            `;
-        }
-    }
+        //     div_ultima.innerHTML = `<h2>Última escolinha vista:</h2> <br>
+        //                             <p><b>Nome:</b>${nome}</p>
+        //                             <p><b>Bairro:</b> ${bairro}</p>
+        //                             <p><b>Rua:</b> ${rua}</p>
+        //                             <p><b>Número:</b> ${numero}</p>
+        //     `;
+        // }
+        var idUsuario = sessionStorage.ID_USUARIO
 
-    function bairro(bairroVar) {
+        fetch("/usuarios/bairro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                idServer: idUsuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+
+                    resposta.json().then(function (dados) {
+                        mensagem.innerHTML = `${dados[0].quantidade}`
+                    });
+
+                } else {
+                    throw "Houve um erro ao tentar procurar o bairro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+
+        fetch("/usuarios/total", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        totalEscolinhas.innerHTML = `${dados[0].total}`
+                    });
+
+                } else {
+                    throw "Houve um erro ao tentar procurar o bairro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+
+        fetch("/usuarios/nulos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        nulos.innerHTML = `${dados[0].nulos}`
+                    });
+
+                } else {
+                    throw "Houve um erro ao tentar procurar o bairro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+
         fetch("/busca/contar", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                bairroServer: bairroVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
+                "Content-Type": "application/json",
+            }
+        })
+            .then(function (resposta) {
+                console.log("ESTOU NO THEN DO entrar()!")
 
 
-            if (resposta.ok) {
-                console.log(resposta);
+                if (resposta.ok) {
+                    console.log(resposta);
 
-                resposta.json().then(json => {
-                    var cor;
+                    resposta.json().then(function (dados) {
+                        var bairros = [];
+                        var totais = [];
 
-                    if (bairroVar == "Eldorado") {
-                        cor = "#00ff88";
-                    } else if (bairroVar == "Campanário") {
-                        cor = "#ff4d4d";
-                    } else if (bairroVar == "Centro") {
-                        cor = "#4d79ff";
-                    } else if (bairroVar == "Piraporinha") {
-                        cor = "#ffb84d";
-                    } else if (bairroVar == "Taboão") {
-                        cor = "#b84dff";
-                    } else if (bairroVar == "Cahema") {
-                        cor = "#00cccc";
-                    } else if (bairroVar == "Conceição") {
-                        cor = "#ff66b3";
-                    } else if (bairroVar == "Inamar") {
-                        cor = "#66ff66";
-                    } else if (bairroVar == "Serraria") {
-                        cor = "#cccc00";
-                    } else if (bairroVar == "Vila Nogueira") {
-                        cor = "#ff884d";
-                    }
+                        for (var i = 0; i < dados.length; i++) {
 
-                    var total = json[0].total;
+                            bairros.push(dados[i].bairro);
+                            totais.push(dados[i].total);
 
-                    const ctx = document.getElementById('myChart');
-
-                    if (window.grafico) {
-                        window.grafico.destroy();
-                    }
-
-                    window.grafico = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Escolinhas'],
-                            datasets: [{
-                                label: 'Quantidade',
-                                data: [total],
-                                backgroundColor: [cor],
-                                borderWidth: 1
-                            }]
                         }
+
+                        const ctx = document.getElementById('myChart');
+
+                        new Chart(ctx, {
+                            type: 'bar',
+
+                            data: {
+                                labels: bairros,
+
+                                datasets: [{
+                                    label: 'Escolinhas',
+                                    data: totais,
+                                    backgroundColor: [
+                                        '#ff4d4d',
+                                        '#4d79ff',
+                                        '#00ff88',
+                                        '#ffb84d',
+                                        '#b84dff',
+                                        '#00cccc',
+                                        '#ff66b3',
+                                        '#66ff66',
+                                        '#cccc00',
+                                        '#ff884d'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'y',
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
+                                },
+                            }
+                        });
                     });
 
-                    console.log(json);
-                    console.log(JSON.stringify(json));
+                }
+                else {
+                    console.log("Houve um erro ao tentar procurar escolinhas!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
 
-                    botaos.innerHTML = "";
+            }).catch(function (erro) {
+                console.log(erro);
+            })
 
-                    for (var i = 0; i < json.length; i++) {
-                        botaos.innerHTML += `${json[i].total}`;
-
-                    }
-                    if (json[i].total == 0) {
-                        botaos.innerHTML += `Ainda sem escolinhas nesse bairro`
-                    }
-
-                });
-
+        fetch("/busca/maisBuscados", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
             }
-            else {
-                console.log("Houve um erro ao tentar procurar escolinhas!");
-                resposta.text().then(texto => {
-                    console.error(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
         })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    resposta.json().then(function (dadosProcurados) {
+
+                        var bairrosProcurados = [];
+                        var totaisProcurados = [];
+
+                        for (var i = 0; i < dadosProcurados.length; i++) {
+                            bairrosProcurados.push(dadosProcurados[i].bairro);
+                            totaisProcurados.push(dadosProcurados[i].total);
+                        }
+
+                        const ctx = document.getElementById('myChart2');
+
+                        new Chart(ctx, {
+                            type: 'bar',
+
+                            data: {
+                                labels: bairrosProcurados,
+
+                                datasets: [{
+                                    label: 'Ranking',
+                                    data: totaisProcurados,
+                                    backgroundColor: [
+                                        '#ff4d4d',
+                                        '#4d79ff',
+                                        '#00ff88',
+                                        '#ffb84d',
+                                        '#b84dff',
+                                        '#00cccc',
+                                        '#ff66b3',
+                                        '#66ff66',
+                                        '#cccc00',
+                                        '#ff884d'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                plugins: {
+                                    legend: {
+                                        display: false // Deixa o topo sem nenhuma cor ou texto
+                                    }
+                                },
+                            }
+                        });
+                    });
+
+                } else {
+                    throw "Houve um erro ao tentar procurar o bairro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+
 
         return false;
     }
+
 
     //     let proximaAtualizacao;
 
