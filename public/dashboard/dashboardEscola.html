@@ -115,9 +115,9 @@
     }
 
     function mostrarEscolasBairro() {
-        var idUsuario = sessionStorage.ID_USUARIO
+        var idEscola = sessionStorage.ID_ESCOLA
 
-        fetch("/usuarios/bairro", {
+        fetch("/escolinhas/bairroEscola", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -125,7 +125,7 @@
             body: JSON.stringify({
                 // crie um atributo que recebe o valor recuperado aqui
                 // Agora vá para o arquivo routes/usuario.js
-                idServer: idUsuario
+                idEscolaServer: idEscola
             }),
         })
             .then(function (resposta) {

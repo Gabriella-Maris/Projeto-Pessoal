@@ -20,9 +20,6 @@ function contar() {
 
 function registrarBusca(bairro) {
     console.log("ACESSEI A BUSCA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function registrarBusca():", bairro);
-
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
     var instrucaoSql = `
         INSERT INTO busca (bairro) VALUES ('${bairro}');
     `;
@@ -32,9 +29,6 @@ function registrarBusca(bairro) {
 
 function maisBuscados() {
     console.log("ACESSEI A BUSCA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function registrarBusca():");
-
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
     var instrucaoSql = `
         SELECT bairro, COUNT(id) AS total FROM busca GROUP BY bairro ORDER BY total DESC LIMIT 3;
     `;
