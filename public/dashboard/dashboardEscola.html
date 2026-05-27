@@ -42,7 +42,7 @@
             </div>
 
             <div class="btn-nav-white">
-                <a href="../buscarEscolinhas.html">
+                <a href="../buscarEscolinhasAdm.html">
                     <h3>Buscar Escolas</h3>
                 </a>
             </div>
@@ -72,7 +72,7 @@
 
                 <div class="kpi">
                     <p>Escolas no seu bairro</p>
-                    <h1 id="mensagem"></h1>
+                    <h1 id="bairro"></h1>
                 </div>
 
                 <div class="kpi">
@@ -104,7 +104,7 @@
 <script>
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
-    window.onload = chamar()
+    window.onload = chamar();
 
     function chamar(){
         mostrarEscolasBairro()
@@ -134,7 +134,7 @@
                 if (resposta.ok) {
 
                     resposta.json().then(function (dados) {
-                        mensagem.innerHTML = `${dados[0].quantidade}`
+                        bairro.innerHTML = `${dados[0].quantidade}`
                     });
 
                 } else {
