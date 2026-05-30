@@ -24,20 +24,6 @@ function listar(req, res) {
     }
 }
 
-function contar(req, res) {
-    buscaModel.contar()
-        .then(
-            function (resultado) {
-                res.json(resultado);
-            }
-        ).catch(
-            function (erro) {
-                console.log(erro);
-                res.status(500).json(erro.sqlMessage);
-            }
-        );
-}
-
 function registrarBusca(req, res) {
     var bairro = req.body.bairroServer;
 
@@ -65,23 +51,7 @@ function registrarBusca(req, res) {
     }
 }
 
-function maisBuscados(req, res) {
-    buscaModel.maisBuscados()
-        .then(
-            function (resultado) {
-                res.json(resultado);
-            }
-        ).catch(
-            function (erro) {
-                console.log(erro);
-                res.status(500).json(erro.sqlMessage);
-            }
-        );
-}
-
 module.exports = {
     listar,
-    contar,
-    registrarBusca,
-    maisBuscados
+    registrarBusca
 }

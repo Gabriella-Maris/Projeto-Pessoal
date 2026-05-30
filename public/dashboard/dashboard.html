@@ -2,34 +2,22 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <link rel="icon" href="./assets/icon/logo.ico">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FutDelas | Dashboards</title>
-
-
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
     <script src="../js/sessao.js"></script>
     <script src="./../js/alerta.js"></script>
-
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-    <!-- scripts do Chart.js - 2022-1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!--FONT AWESOME-->
     <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
-
-<!-- <body onload=" atualizarFeed()"> -->
 
 <body style="position: fixed; width: 100%; height: 100%;">
 
@@ -114,42 +102,8 @@
         bairrosTopTres()
     }
 
-    function mostrarEscolasBairro() {
-        var idUsuario = sessionStorage.ID_USUARIO
-
-        fetch("/usuarios/bairro", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
-                idServer: idUsuario
-            }),
-        })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
-
-                if (resposta.ok) {
-
-                    resposta.json().then(function (dados) {
-                        mensagem.innerHTML = `${dados[0].quantidade}`
-                    });
-
-                } else {
-                    throw "Houve um erro ao tentar procurar o bairro!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-                finalizarAguardar();
-            });
-        return false;
-    }
-
     function totalEscolasDiadema(){
-        fetch("/usuarios/total", {
+        fetch("/dashboard/total", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -174,8 +128,41 @@
         return false;
     }
 
+    function mostrarEscolasBairro() {
+        var idUsuario = sessionStorage.ID_USUARIO
+
+        fetch("/dashboard/bairro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idServer: idUsuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+
+                    resposta.json().then(function (dados) {
+                        mensagem.innerHTML = `${dados[0].quantidade}`
+                    });
+
+                } else {
+                    throw "Houve um erro ao tentar procurar o bairro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+        return false;
+    }
+
+
     function bairrosSemEscolas(){
-        fetch("/usuarios/nulos", {
+        fetch("/dashboard/nulos", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -202,7 +189,7 @@
     }
 
     function graficoTotalEscolas(){
-        fetch("/busca/contar", {
+        fetch("/dashboard/contar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -220,10 +207,8 @@
                         var totais = [];
 
                         for (var i = 0; i < dados.length; i++) {
-
                             bairros.push(dados[i].bairro);
                             totais.push(dados[i].total);
-
                         }
 
                         const ctx = document.getElementById('myChart');
@@ -278,7 +263,7 @@
     }
 
     function bairrosTopTres(){
-        fetch("/busca/maisBuscados", {
+        fetch("/dashboard/maisBuscados", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

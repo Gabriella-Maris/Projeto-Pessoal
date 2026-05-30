@@ -12,8 +12,4 @@ router.post("/autenticar", function (req, res) {
     escolaController.autenticar(req, res);
 });
 
-router.post("/bairroEscola", function (req, res) {
-    escolaController.bairroEscola(req, res);
-});
-
 module.exports = router;

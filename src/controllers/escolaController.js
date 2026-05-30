@@ -103,36 +103,7 @@ function cadastrar(req, res) {
     }
 }
 
-
-function bairroEscola(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var idEscola = req.body.idEscolaServer;
-
-    // Faça as validações dos valores
-    if (idEscola == undefined) {
-        res.status(400).send("Seu id está undefined!");
-    } else {
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        escolaModel.bairroEscola(idEscola)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar a busca! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-}
-
 module.exports = {
     autenticar,
-    cadastrar,
-    bairroEscola
+    cadastrar
 }

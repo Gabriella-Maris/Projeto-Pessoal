@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./css/dashboards.css">
+    <link rel="icon" href="./assets/icon/logo.ico">
     <script src="../js/sessao.js"></script>
 </head>
 
@@ -55,9 +56,27 @@
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     function busca() {
-        console.log(`${16 + 10}`)
-
         var bairroVar = input_bairro.value;
+
+        const bairrosValidos = [
+            "Campanário",
+            "Centro",
+            "Vila Nogueira",
+            "Eldorado",
+            "Piraporinha",
+            "Casa Grande",
+            "Conceição",
+            "Canhema",
+            "Taboão",
+            "Serraria",
+            "Inamar"
+        ];
+
+        if (!bairrosValidos.includes(bairroVar)) {
+            alert("Selecione um bairro de Diadema. Ex: Campanário");
+            return;
+        }
+
 
         fetch("/busca/listar", {
             method: "POST",
@@ -81,7 +100,8 @@
                     resultado.innerHTML = "";
 
                     if (json.length == 0) {
-                        resultado.innerHTML = `Ainda sem escolinhas cadastradas neste bairro`
+                        resultado.innerHTML = `<b><span style="color: red;">Ainda sem escolinhas cadastradas neste bairro</span></b>`
+                        return;
                     }
 
                     let tabela = `

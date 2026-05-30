@@ -22,17 +22,7 @@ function cadastrar(nome, cnpj, bairro, rua, numero, nome_representante, email, c
     return database.executar(instrucaoSql);
 }
 
-function bairroEscola(idEscola) {
-    console.log("ACESSEI O Escola MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idEscola)
-    var instrucaoSql = `
-       SELECT COUNT(*) AS quantidade FROM escolinha WHERE bairro = (SELECT bairro FROM escolinha AS Escola WHERE id = ${idEscola})`;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-
-
 module.exports = {
     autenticar,
-    cadastrar,
-    bairroEscola
+    cadastrar
 };
