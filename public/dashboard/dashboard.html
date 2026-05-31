@@ -12,7 +12,9 @@
     <script src="../js/sessao.js"></script>
     <script src="./../js/alerta.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -94,7 +96,7 @@
 
     window.onload = chamar();
 
-    function chamar(){
+    function chamar() {
         mostrarEscolasBairro()
         totalEscolasDiadema()
         bairrosSemEscolas()
@@ -102,7 +104,7 @@
         bairrosTopTres()
     }
 
-    function totalEscolasDiadema(){
+    function totalEscolasDiadema() {
         fetch("/dashboard/total", {
             method: "POST",
             headers: {
@@ -111,12 +113,12 @@
         })
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
-    
+
                 if (resposta.ok) {
                     resposta.json().then(function (dados) {
                         totalEscolinhas.innerHTML = `${dados[0].total}`
                     });
-    
+
                 } else {
                     throw "Houve um erro ao tentar procurar o bairro!";
                 }
@@ -161,7 +163,7 @@
     }
 
 
-    function bairrosSemEscolas(){
+    function bairrosSemEscolas() {
         fetch("/dashboard/nulos", {
             method: "POST",
             headers: {
@@ -170,13 +172,13 @@
         })
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
-    
+
                 if (resposta.ok) {
                     resposta.json().then(function (dados) {
                         let total = 11;
                         nulos.innerHTML = `${((dados[0].nulos / total) * 100).toFixed(2)}%`;
                     });
-    
+
                 } else {
                     throw "Houve um erro ao tentar procurar o bairro!";
                 }
@@ -188,7 +190,7 @@
         return false;
     }
 
-    function graficoTotalEscolas(){
+    function graficoTotalEscolas() {
         fetch("/dashboard/contar", {
             method: "POST",
             headers: {
@@ -244,6 +246,13 @@
                                         display: false
                                     }
                                 },
+                                scales: {
+                                    x: {
+                                        ticks: {
+                                            stepSize: 1
+                                        }
+                                    }
+                                }
                             }
                         });
                     });
@@ -262,7 +271,7 @@
         return false;
     }
 
-    function bairrosTopTres(){
+    function bairrosTopTres() {
         fetch("/dashboard/maisBuscados", {
             method: "POST",
             headers: {
@@ -271,26 +280,26 @@
         })
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
-    
+
                 if (resposta.ok) {
                     resposta.json().then(function (dadosProcurados) {
-    
+
                         var bairrosProcurados = [];
                         var totaisProcurados = [];
-    
+
                         for (var i = 0; i < dadosProcurados.length; i++) {
                             bairrosProcurados.push(dadosProcurados[i].bairro);
                             totaisProcurados.push(dadosProcurados[i].total);
                         }
-    
+
                         const ctx = document.getElementById('myChart2');
-    
+
                         new Chart(ctx, {
                             type: 'bar',
-    
+
                             data: {
                                 labels: bairrosProcurados,
-    
+
                                 datasets: [{
                                     label: '',
                                     data: totaisProcurados,
@@ -312,13 +321,20 @@
                             options: {
                                 plugins: {
                                     legend: {
-                                        display: false 
+                                        display: false
                                     }
                                 },
+                                scales: {
+                                    y: {
+                                        ticks: {
+                                            stepSize: 1
+                                        }
+                                    }
+                                }
                             }
                         });
                     });
-    
+
                 } else {
                     throw "Houve um erro ao tentar procurar o bairro!";
                 }
@@ -327,8 +343,8 @@
                 console.log(`#ERRO: ${resposta}`);
                 finalizarAguardar();
             });
-    
-    
+
+
         return false;
     }
 </script>

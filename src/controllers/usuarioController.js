@@ -5,7 +5,7 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var cpf = req.body.cpfServer;
-    var bairroUsuario = req.body.bairroUsuarioServer
+    var fkBairroUsuario = req.body.fkBairroUsuarioServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -16,12 +16,12 @@ function cadastrar(req, res) {
         res.status(400).send("Sua senha está undefined!");
     } else if (cpf == undefined) {
         res.status(400).send("Seu CPF está undefined!");
-    } else if (bairroUsuario == undefined) {
+    } else if (fkBairroUsuario == undefined) {
         res.status(400).send("Seu bairro está undefined!");
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha, cpf, bairroUsuario)
+        usuarioModel.cadastrar(nome, email, senha, cpf, fkBairroUsuario)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -64,7 +64,7 @@ function autenticar(req, res) {
                             email: resultadoAutenticar[0].email,
                             senha: resultadoAutenticar[0].senha,
                             cpf: resultadoAutenticar[0].cpf,
-                            bairroUsuario: resultadoAutenticar[0].bairroUsuario
+                            bairro: resultadoAutenticar[0].bairro
                         });
 
 

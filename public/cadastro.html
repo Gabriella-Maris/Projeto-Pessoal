@@ -67,7 +67,20 @@
           </div>
           <div class="campo">
             <span>Bairro:</span>
-            <input id="bairro_usuario_input" type="text" placeholder="Seu bairro" />
+            <select id="bairro_usuario_input">
+              <option value="">Selecione</option>
+              <option value="1">Campanário</option>
+              <option value="2">Eldorado</option>
+              <option value="3">Centro</option>
+              <option value="4">Piraporinha</option>
+              <option value="5">Taboão</option>
+              <option value="6">Canhema</option>
+              <option value="7">Conceição</option>
+              <option value="8">Inamar</option>
+              <option value="9">Serraria</option>
+              <option value="10">Vila Nogueira</option>
+              <option value="11">Casa Grande</option>
+            </select>
           </div>
           <div class="campo">
             <span>Senha:</span>
@@ -175,22 +188,6 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    var bairrosUsuarioValidos = [
-      'Campanário', 'Eldorado', 'Centro', 'Piraporinha',
-      'Taboão', 'Canhema', 'Conceição', 'Inamar',
-      'Serraria', 'Vila Nogueira'
-    ];
-
-    if (!bairrosUsuarioValidos.includes(bairroUsuarioVar)) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML = `Bairro inválido (selecione um bairro de Diadema)`
-
-      finalizarAguardar();
-      return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
-    }
-
     if (tamanhoSenha <= 6) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = `Senha deve ser maior que 6`
@@ -224,7 +221,7 @@
         emailServer: emailVar,
         senhaServer: senhaVar,
         cpfServer: cpfVar,
-        bairroUsuarioServer: bairroUsuarioVar
+        fkBairroUsuarioServer: bairroUsuarioVar
       }),
     })
       .then(function (resposta) {

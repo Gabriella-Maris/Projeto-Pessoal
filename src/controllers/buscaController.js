@@ -2,7 +2,7 @@ var buscaModel = require("../models/buscaModel");
 
 function listar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var bairro = req.body.bairroServer;
+    var bairro = req.body.fkBairroEscolaServer;
 
     // Faça as validações dos valores
     if (bairro == undefined) {
@@ -25,7 +25,7 @@ function listar(req, res) {
 }
 
 function registrarBusca(req, res) {
-    var bairro = req.body.bairroServer;
+    var bairro = req.body.fkBairroEscolaServer;
 
     // Faça as validações dos valores
     if (bairro == undefined) {

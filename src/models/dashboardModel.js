@@ -4,7 +4,7 @@ var database = require("../database/config")
 function total() {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
     var instrucaoSql = `
-       SELECT COUNT(escolinha.id) AS total FROM escolinha; `
+       SELECT COUNT(*) AS total FROM escolinha; `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -13,7 +13,7 @@ function total() {
 function bairro(idUsuario) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idUsuario)
     var instrucaoSql = `
-       SELECT COUNT(escolinha.bairro) AS quantidade FROM escolinha JOIN usuario ON escolinha.bairro = usuario.bairroUsuario WHERE usuario.id = '${idUsuario}';`
+       SELECT COUNT(*) AS quantidade FROM escolinha WHERE fkBairroEscola = (SELECT fkBairroUsuario FROM usuario WHERE id = ${idUsuario});`
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -22,7 +22,7 @@ function bairro(idUsuario) {
 function bairroEscola(idEscola) {
     console.log("ACESSEI O Escola MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idEscola)
     var instrucaoSql = `
-       SELECT COUNT(*) AS quantidade FROM escolinha WHERE bairro = (SELECT bairro FROM escolinha AS Escola WHERE id = ${idEscola})`;
+       SELECT COUNT(*) AS quantidade FROM escolinha WHERE fkBairroEscola = (SELECT fkBairroEscola FROM escolinha WHERE id = ${idEscola});`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -31,7 +31,7 @@ function bairroEscola(idEscola) {
 function nulos() {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
     var instrucaoSql = `
-       SELECT COUNT(bairro.id) AS nulos FROM bairro LEFT JOIN escolinha ON bairro.nome = escolinha.bairro WHERE escolinha.id IS NULL;`
+       SELECT COUNT(*) AS nulos FROM bairro b LEFT JOIN escolinha e ON b.id = e.fkBairroEscola WHERE e.id IS NULL;`
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -40,8 +40,7 @@ function nulos() {
 function contar() {
     console.log("Bairro recebido \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
     var instrucaoSql = `
-        SELECT bairro, COUNT(id) AS total FROM escolinha GROUP BY bairro;
-    `;
+        SELECT b.nome AS bairro, COUNT(e.id) AS total FROM bairro b JOIN escolinha e ON b.id = e.fkBairroEscola GROUP BY b.id, b.nome ORDER BY total DESC;`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -50,8 +49,7 @@ function contar() {
 function maisBuscados() {
     console.log("ACESSEI A BUSCA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function registrarBusca():");
     var instrucaoSql = `
-        SELECT bairro, COUNT(id) AS total FROM busca GROUP BY bairro ORDER BY total DESC LIMIT 3;
-    `;
+        SELECT b.nome AS bairro, COUNT(bs.id) AS total FROM bairro b JOIN busca bs ON b.id = bs.fkBairroBusca GROUP BY b.id, b.nome ORDER BY total DESC LIMIT 3;`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }

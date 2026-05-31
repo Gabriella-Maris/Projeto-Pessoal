@@ -66,7 +66,20 @@
                             </div>
                             <div class="campo">
                                 <span>Bairro:</span>
-                                <input id="bairro_input" type="text" placeholder="Bairro da escolinha" />
+                                <select id="bairro_input">
+                                    <option value="">Selecione</option>
+                                    <option value="1">Campanário</option>
+                                    <option value="2">Eldorado</option>
+                                    <option value="3">Centro</option>
+                                    <option value="4">Piraporinha</option>
+                                    <option value="5">Taboão</option>
+                                    <option value="6">Canhema</option>
+                                    <option value="7">Conceição</option>
+                                    <option value="8">Inamar</option>
+                                    <option value="9">Serraria</option>
+                                    <option value="10">Vila Nogueira</option>
+                                    <option value="11">Casa Grande</option>
+                                </select>
                             </div>
                             <div class="campo">
                                 <span>Rua:</span>
@@ -193,22 +206,6 @@
             setInterval(sumirMensagem, 5000);
         }
 
-        var bairrosValidos = [
-            'Campanário', 'Eldorado', 'Centro', 'Piraporinha',
-            'Taboão', 'Canhema', 'Conceição', 'Inamar',
-            'Serraria', 'Vila Nogueira'
-        ];
-
-        if (!bairrosValidos.includes(bairroVar)) {
-            cardErro.style.display = "block";
-            mensagem_erro.innerHTML = `Bairro inválido (selecione um bairro de Diadema)`
-
-            finalizarAguardar();
-            return false;
-        } else {
-            setInterval(sumirMensagem, 5000);
-        }
-
         if (tamanhoNome <= 1) {
             cardErro.style.display = "block";
             mensagem_erro.innerHTML = `Nome inválido`
@@ -280,7 +277,7 @@
                 cpfServer: cpfVar,
                 nome_representanteServer: nome_representanteVar,
                 cnpjServer: cnpjVar,
-                bairroServer: bairroVar,
+                fkBairroEscolaServer: bairroVar,
                 ruaServer: ruaVar,
                 numeroServer: numeroVar
             }),
