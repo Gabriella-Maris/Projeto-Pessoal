@@ -41,8 +41,21 @@
 
         <div class="dash-busca">
             <div class="container-escolinha">
-                <input type="text" id="input_bairro" placeholder="Buscar por bairro. Ex: Campanário.">
-                <button onclick="busca()"><img src="./assets/procurar.png" alt=""></button>
+                <select id="input_bairro">
+                    <option value="">Selecione</option>
+                    <option value="1">Campanário</option>
+                    <option value="2">Eldorado</option>
+                    <option value="3">Centro</option>
+                    <option value="4">Piraporinha</option>
+                    <option value="5">Taboão</option>
+                    <option value="6">Canhema</option>
+                    <option value="7">Conceição</option>
+                    <option value="8">Inamar</option>
+                    <option value="9">Serraria</option>
+                    <option value="10">Vila Nogueira</option>
+                    <option value="11">Casa Grande</option>
+                </select>
+                <button onclick="busca(event)"><img src="./assets/procurar.png" alt=""></button>
             </div>
             <div id="resultado"></div>
         </div>
@@ -58,32 +71,13 @@
     function busca() {
         var bairroVar = input_bairro.value;
 
-        const bairrosValidos = [
-            "Campanário",
-            "Centro",
-            "Vila Nogueira",
-            "Eldorado",
-            "Piraporinha",
-            "Casa Grande",
-            "Conceição",
-            "Canhema",
-            "Taboão",
-            "Serraria",
-            "Inamar"
-        ];
-
-        if (!bairrosValidos.includes(bairroVar)) {
-            alert("Selecione um bairro de Diadema. Ex: Campanário");
-            return;
-        }
-
         fetch("/busca/listar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                bairroServer: bairroVar
+                fkBairroEscolaServer: bairroVar
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
@@ -97,7 +91,6 @@
                     console.log(JSON.stringify(json));
 
                     resultado.innerHTML = "";
-
 
                     if (json.length == 0) {
                         resultado.innerHTML = `<b><span style="color: red;">Ainda sem escolinhas cadastradas neste bairro</span></b>`
@@ -156,7 +149,7 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                bairroServer: bairroVar
+                fkBairroEscolaServer: bairroVar
             })
         })
 

@@ -155,7 +155,7 @@ body {
   justify-content: center;
 }
 
-.container-escolinha input {
+.container-escolinha select {
   width: 600px;
   height: 40px;
   border: 2px solid #1dff00;
